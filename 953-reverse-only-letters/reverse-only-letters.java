@@ -1,28 +1,36 @@
 class Solution {
     public String reverseOnlyLetters(String s) {
+        int i = 0;
+        int j = s.length() - 1;
+
         char[] arr = s.toCharArray();
 
-        int left = 0;
-        int right = arr.length - 1;
+        while (i < j) {
 
-        while (left < right) {
-
-            while (left < right && !Character.isLetter(arr[left])) {
-                left++;
+            // Move i until it points to a letter
+            while (i < j && !isEnglish(arr[i])) {
+                i++;
             }
 
-            while (left < right && !Character.isLetter(arr[right])) {
-                right--;
+            // Move j until it points to a letter
+            while (i < j && !isEnglish(arr[j])) {
+                j--;
             }
 
-            char temp = arr[left];
-            arr[left] = arr[right];
-            arr[right] = temp;
+            // Swap letters
+            char temp = arr[i];
+            arr[i] = arr[j];
+            arr[j] = temp;
 
-            left++;
-            right--;
+            i++;
+            j--;
         }
 
         return new String(arr);
+    }
+
+    public static boolean isEnglish(char c) {
+        return (c >= 'A' && c <= 'Z') ||
+               (c >= 'a' && c <= 'z');
     }
 }
